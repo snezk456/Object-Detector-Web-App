@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>Objects in a Study Room</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body background="background.png">
+        <h1>Objects in a Study Room</h1>
+        <h3 id="status" class="btn btn-danger"></h3>
+        <br><br>
+        <a href="index.html" class="btn" style="float: right; font-size: 20px;">Back</a>
+<script>
+        status = "";
+        img = "";
+function preload() {
+img = loadImage('books_and_study_table.jpg');
+}
+function setup() {
+    canvas = createCanvas(640, 420);
+    canvas.center();
+    objectDetector = ml5.objectDetector('cocossd', modelLoaded);
+    document.getElementById("status").innerHTML = "Status : Detecting Objects";
+}
+function modelLoaded() {
+    console.log("Model Loaded!");
+    status = true;
+    objectDetector.detect(img, gotResult);
+}
+function gotResult(error, results) {
+    if(error) {
+        console.log(error);
+    }
+    console.log(results);
+}
+function draw() {
+    image(img, 0, 0, 640, 420);
+    fill("#797EF6");
+    text("books", 30, 50);
+    noFill();
+    stroke("#000000");
+    rect(20, 30, 200, 350);
+
+    fill("#797EF6");
+    text("table", 370, 180);
+    noFill();
+    stroke("#000000");
+    rect(350, 150, 150, 180);
+
+    fill("#797EF6");
+    text("chair", 550, 280);
+    noFill();
+    stroke("#000000");
+    rect(510, 260, 120, 150);
+
+    fill("#797EF6");
+    text("potted plant", 250, 170);
+    noFill();
+    stroke("#000000");
+    rect(230, 150, 100, 500);
+}
+    </script>
+    </body>
+</html>
