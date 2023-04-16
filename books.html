@@ -20,6 +20,7 @@
 <script>
         status = "";
         img = "";
+        objects = [];
 function preload() {
 img = loadImage('books_and_study_table.jpg');
 }
@@ -39,6 +40,7 @@ function gotResult(error, results) {
         console.log(error);
     }
     console.log(results);
+    objects = results;
 }
 function draw() {
     image(img, 0, 0, 640, 420);
@@ -65,6 +67,21 @@ function draw() {
     noFill();
     stroke("#000000");
     rect(230, 150, 100, 500);
+
+    if(status != "")
+    {
+        for(i = 0; i < objects.length; i++)
+        {
+            document.getElementById("status").innerHTML = "Status : Object Detected";
+
+            fill("#797EF6");
+            percent = floor(objects[i].confidence * 100);
+            text(objects[i].label + " " + percent + "%", objects[i].x+15, objects[i].y+15);
+            noFill();
+            stroke("#03C04A");
+            rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+    }
 }
     </script>
     </body>
