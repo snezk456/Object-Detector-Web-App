@@ -20,6 +20,7 @@
 <script>
         status = "";
         img = "";
+        objects = [];
 function preload() {
 img = loadImage('shelves_and_other.jpg');
 }
@@ -39,6 +40,7 @@ function gotResult(error, results) {
         console.log(error);
     }
     console.log(results);
+    objects = results;
 }
 function draw() {
     image(img, 0, 0, 640, 420);
@@ -89,6 +91,21 @@ function draw() {
     noFill();
     stroke("#000000");
     rect(500, 0, 140, 130);
+
+    if(status != "")
+    {
+        for(i = 0; i < objects.length; i++)
+        {
+            document.getElementById("status").innerHTML = "Status : Object Detected";
+
+            fill("#797EF6");
+            percent = floor(objects[i].confidence * 100);
+            text(objects[i].label + " " + percent + "%", objects[i].x+20, objects[i].y+20);
+            noFill();
+            stroke("#03C04A");
+            rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+    }
 }
     </script>
     </body>
